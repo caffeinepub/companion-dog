@@ -2,13 +2,16 @@
   "manifest_version": 3,
   "name": "Companion Dog",
   "version": "1.0.0",
-  "description": "Your encouraging browser buddy that provides motivation, reminders, and note-taking",
+  "description": "Your friendly companion that keeps you motivated and reminds you to take breaks",
   "permissions": [
     "storage",
-    "notifications"
+    "activeTab"
   ],
   "host_permissions": [
-    "<all_urls>"
+    "https://*.ic0.app/*",
+    "https://*.icp0.io/*",
+    "https://identity.ic0.app/*",
+    "https://identity.internetcomputer.org/*"
   ],
   "content_scripts": [
     {
@@ -20,11 +23,15 @@
   "web_accessible_resources": [
     {
       "resources": [
-        "assets/generated/*.png"
+        "assets/*",
+        "assets/generated/*"
       ],
       "matches": ["<all_urls>"]
     }
   ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; connect-src 'self' https://*.ic0.app https://*.icp0.io https://identity.ic0.app https://identity.internetcomputer.org https://icp-api.io https://icp0.io;"
+  },
   "icons": {
     "16": "assets/generated/dog-companion.dim_256x256.png",
     "48": "assets/generated/dog-companion.dim_256x256.png",

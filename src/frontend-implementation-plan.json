@@ -1,79 +1,37 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Fix login functionality in end-to-end flow",
+  "title": "Fix Internet Identity authorization redirect blank page issue",
   "requirements": [
     {
-      "id": "REQ-10",
-      "summary": "Debug and fix Internet Identity login flow in extension content script to enable successful authentication",
+      "id": "REQ-13",
+      "summary": "Debug and fix the blank page issue during Internet Identity login flow in the browser extension content script",
       "acceptanceCriteria": [
-        "Users can click the login button in the DogOverlay and successfully authenticate with Internet Identity",
-        "After successful login, the authenticated principal is available to the actor hooks",
-        "The InternetIdentityProvider context properly initializes in the shadow DOM content script environment",
-        "Login state persists across page reloads within the extension",
-        "Error handling displays clear feedback if login fails"
+        "Users clicking the login button in DogOverlay successfully complete the Internet Identity authentication flow without encountering a blank page at id.ai/#authorize",
+        "After authentication, users are properly redirected back to the extension with their identity established",
+        "The login state persists correctly across page navigations within the extension",
+        "No console errors related to authentication or redirect handling appear during the login process"
       ],
       "file_operations": [
+        {
+          "path": "frontend/src/hooks/useInternetIdentity.ts",
+          "operation": "modify",
+          "description": "Investigate and fix the Internet Identity AuthClient configuration to prevent blank page redirects during the authorization flow. Ensure the redirect URL handling is compatible with the content script shadow DOM environment. Add proper window message listeners or postMessage handling if needed to capture the authorization callback within the extension context. Verify the component's usage instructions before implementing."
+        },
         {
           "path": "frontend/src/content/content.tsx",
           "operation": "modify",
-          "description": "Debug and fix the InternetIdentityProvider initialization in the shadow DOM content script environment. Ensure the provider correctly handles the extension context, including proper canister ID configuration and auth-client initialization. Add error boundaries and console logging to diagnose initialization failures. Verify that the QueryClient and provider wrapping order supports authentication state propagation to child components."
+          "description": "Review the shadow DOM initialization and InternetIdentityProvider setup to ensure it doesn't interfere with Internet Identity redirect handling. Add message event listeners or window communication bridges if the authorization callback needs to be captured at the content script level. Ensure proper cleanup of event listeners. Verify the component's usage instructions before implementing."
         },
         {
           "path": "frontend/src/content/DogOverlay.tsx",
           "operation": "modify",
-          "description": "Debug the login button handler to ensure it properly triggers Internet Identity authentication in the extension content script context. Add error handling with user-facing feedback for login failures. Verify that the useInternetIdentity hook returns valid login/logout functions and isAuthenticated state. Add loading states during authentication. Ensure the component re-renders appropriately after successful login to show authenticated UI elements."
-        }
-      ]
-    },
-    {
-      "id": "REQ-11",
-      "summary": "Verify authenticated users can perform CRUD operations on notes through NotesPanel",
-      "acceptanceCriteria": [
-        "After login, users can create new notes that persist to the backend",
-        "Users can view their existing notes loaded from the backend",
-        "Users can edit existing notes and changes save successfully",
-        "Users can delete notes and the deletion reflects in the backend",
-        "All CRUD operations complete without errors and update the UI appropriately"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/content/NotesPanel.tsx",
-          "operation": "modify",
-          "description": "Debug and verify all CRUD operations work correctly after successful login. Add error handling for each operation (create, edit, delete) with user-facing error messages. Ensure the useNotes query properly refetches after mutations. Add loading states for async operations. Verify that the actor is properly passed to all mutation hooks. Add console logging to diagnose any failures in note operations. Ensure the UI updates immediately after successful operations via React Query invalidation."
+          "description": "Review the login button click handler and authentication state management. Add error boundaries or fallback UI states to handle authentication failures gracefully. Ensure the component properly responds to authentication state changes from the InternetIdentityProvider. Add console logging for debugging authentication flow issues."
         },
         {
-          "path": "frontend/src/hooks/useQueries.ts",
+          "path": "frontend/public/manifest.json",
           "operation": "modify",
-          "description": "Debug the notes-related React Query hooks (useNotes, useCreateNote, useEditNote, useDeleteNote) to ensure they work correctly with the authenticated actor. Add error handling and retry logic. Verify that mutations properly invalidate the notes query to trigger refetches. Add logging to diagnose actor availability issues. Ensure query keys are consistent and cache invalidation works as expected after mutations."
-        }
-      ]
-    },
-    {
-      "id": "REQ-12",
-      "summary": "Verify authenticated users can set break reminders and receive notifications",
-      "acceptanceCriteria": [
-        "After login, users can set break reminder intervals that save to the backend",
-        "Break notifications appear at the configured intervals",
-        "Users can snooze or dismiss notifications",
-        "Break reminder settings persist across sessions",
-        "The notification queue properly manages pending notifications"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/content/BreakReminderPanel.tsx",
-          "operation": "modify",
-          "description": "Debug the break reminder interval setting to ensure it saves correctly to the backend after login. Add error handling for the useSetBreakReminder mutation with user-facing feedback. Verify that the interval value is properly converted to the backend's expected bigint format. Add success confirmation feedback after saving. Ensure localStorage and backend state remain synchronized."
-        },
-        {
-          "path": "frontend/src/content/DogOverlay.tsx",
-          "operation": "modify",
-          "description": "Debug the notification polling mechanism to ensure it works correctly with the authenticated actor. Verify the useEffect that checks for notifications via getNextNotification properly triggers at configured intervals. Add error handling for notification fetching. Ensure the BreakNotification component displays when a notification is available. Verify that snooze and dismiss actions properly clear notifications and reset timers. Add logging to diagnose notification queue management issues."
-        },
-        {
-          "path": "frontend/src/hooks/useQueries.ts",
-          "operation": "modify",
-          "description": "Debug the useSetBreakReminder and useGetNextNotification hooks to ensure they work correctly with the authenticated actor. Add error handling and logging. Verify that the break reminder mutation properly calls the backend setBreakReminder method with the correct bigint parameter. Ensure the notification query properly handles null responses and error states."
+          "description": "Review and update the Chrome extension manifest to ensure proper permissions and content security policy settings that allow Internet Identity authentication redirects. Verify that web_accessible_resources includes any necessary authentication callback handlers. Ensure the manifest doesn't block the id.ai domain or authorization flows."
         }
       ]
     }

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 5,
+  "projectStateVersion": 7,
   "summary": "Browser extension with an overlay pop-up dog companion that provides encouragement, allows feeding/petting interactions, note-taking functionality, and break reminders at set intervals",
   "architectural_notes": [
     "Browser extension using Manifest V3",
@@ -9,10 +9,8 @@
     "Local storage for user preferences and break timer settings",
     "Chrome extension format (can be loaded unpacked from zip)"
   ],
-  "known_issues": [
-    "Login step not working in end-to-end flow"
-  ],
-  "isFixRequest": true,
+  "known_issues": [],
+  "isFixRequest": false,
   "existing_features": [
     {
       "id": "feature-create-a-browser-extension-manifest-manifest-json-that-enables-the-extension-to-inject-content-scripts-into-web-pages-and-display-an-overlay",
@@ -107,6 +105,14 @@
       "title": "Verify that authenticated users can set break reminder intervals and receive notifications through the BreakReminderPanel after login",
       "reqIds": [
         "REQ-12"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-debug-and-fix-the-blank-page-issue-that-occurs-when-users-are-redirected-to-id-ai-authorize-during-the-internet-identity-login-flow-in-the-browser-extension-content-script",
+      "title": "Debug and fix the blank page issue that occurs when users are redirected to id.ai/#authorize during the Internet Identity login flow in the browser extension content script",
+      "reqIds": [
+        "REQ-13"
       ],
       "version": 1
     }

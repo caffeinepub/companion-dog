@@ -1,12 +1,12 @@
 # Specification
 
 ## Summary
-**Goal:** Fix the Internet Identity login flow and verify end-to-end functionality for notes and break reminders.
+**Goal:** Fix the blank page issue that occurs during Internet Identity authorization redirect in the browser extension.
 
 **Planned changes:**
-- Debug and fix the Internet Identity authentication in the extension content script
-- Ensure login state persists and the authenticated principal is available to actor hooks
-- Verify notes CRUD operations (create, read, edit, delete) work after login
-- Verify break reminder settings and notifications work after login
+- Debug and resolve the blank page appearing at id.ai/#authorize during the Internet Identity login flow
+- Ensure proper redirect handling after authentication completes
+- Fix login state persistence across page navigations within the extension
+- Eliminate console errors related to authentication and redirect handling
 
-**User-visible outcome:** Users can successfully log in with Internet Identity and use all features (notes and break reminders) without errors.
+**User-visible outcome:** Users can successfully log in using Internet Identity without encountering a blank authorization page, and remain authenticated while using the extension.

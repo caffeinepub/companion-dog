@@ -71,6 +71,7 @@ export default function DogOverlay() {
   // Show login error as message
   useEffect(() => {
     if (loginError) {
+      console.error('[DogOverlay] Login error detected:', loginError);
       setCurrentMessage(`Login failed: ${loginError.message}`);
       setTimeout(() => setCurrentMessage(null), 5000);
     }
@@ -79,10 +80,20 @@ export default function DogOverlay() {
   // Show login success message
   useEffect(() => {
     if (loginStatus === 'success') {
+      console.log('[DogOverlay] Login successful');
       setCurrentMessage('Successfully logged in! 🎉');
       setTimeout(() => setCurrentMessage(null), 3000);
     }
   }, [loginStatus]);
+
+  // Debug logging for authentication state
+  useEffect(() => {
+    console.log('[DogOverlay] Auth state:', {
+      isAuthenticated,
+      loginStatus,
+      principal: identity?.getPrincipal().toString()
+    });
+  }, [isAuthenticated, loginStatus, identity]);
 
   const handleMouseDown = (e: React.MouseEvent) => {
     if ((e.target as HTMLElement).closest('button')) return;
@@ -153,11 +164,29 @@ export default function DogOverlay() {
   };
 
   const handleLogin = () => {
-    if (isLoggingIn) return;
-    login();
+    console.log('[DogOverlay] Login button clicked, isLoggingIn:', isLoggingIn);
+    if (isLoggingIn) {
+      console.log('[DogOverlay] Already logging in, ignoring click');
+      return;
+    }
+    console.log('[DogOverlay] Calling login()');
+    try {
+      login();
+      setCurrentMessage('Opening login window...');
+      setTimeout(() => {
+        if (loginStatus === 'logging-in') {
+          setCurrentMessage(null);
+        }
+      }, 2000);
+    } catch (error) {
+      console.error('[DogOverlay] Login error:', error);
+      setCurrentMessage('Login failed. Please try again.');
+      setTimeout(() => setCurrentMessage(null), 3000);
+    }
   };
 
   const handleLogout = () => {
+    console.log('[DogOverlay] Logout initiated');
     clear();
     setShowNotes(false);
     setShowBreakSettings(false);
@@ -224,64 +253,59 @@ export default function DogOverlay() {
           left: `${position.x}px`,
           top: `${position.y}px`,
           zIndex: 999999,
-          cursor: isDragging ? 'grabbing' : 'grab',
         }}
-        onMouseDown={handleMouseDown}
         className="dog-overlay select-none"
+        onMouseDown={handleMouseDown}
       >
         <div className="relative">
           {/* Control buttons */}
           <div className="absolute -top-2 -right-2 flex gap-1 z-10">
-            {isAuthenticated ? (
-              <button
-                onClick={handleLogout}
-                title="Logout"
-                className="w-6 h-6 rounded-full bg-red-500 hover:bg-red-600 text-white flex items-center justify-center shadow-lg transition-colors"
-              >
-                <LogOut className="w-3 h-3" />
-              </button>
-            ) : (
-              <button
-                onClick={handleLogin}
-                disabled={isLoggingIn}
-                title="Login"
-                className="w-6 h-6 rounded-full bg-green-500 hover:bg-green-600 text-white flex items-center justify-center shadow-lg transition-colors disabled:opacity-50"
-              >
-                {isLoggingIn ? (
-                  <div className="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                ) : (
-                  <LogIn className="w-3 h-3" />
-                )}
-              </button>
-            )}
             <button
               onClick={() => setIsMinimized(true)}
-              className="w-6 h-6 rounded-full bg-amber-500 hover:bg-amber-600 text-white flex items-center justify-center shadow-lg transition-colors"
+              className="w-6 h-6 rounded-full bg-amber-500 hover:bg-amber-600 text-white flex items-center justify-center shadow-lg transition-colors cursor-pointer"
+              title="Minimize"
             >
               <Minimize2 className="w-3 h-3" />
             </button>
           </div>
 
-          {/* Authentication status indicator */}
-          {isAuthenticated && (
-            <div className="absolute -top-2 -left-2 z-10">
-              <div className="w-6 h-6 rounded-full bg-green-500 text-white flex items-center justify-center shadow-lg" title="Logged in">
-                <User className="w-3 h-3" />
-              </div>
-            </div>
-          )}
+          {/* Auth button */}
+          <div className="absolute -top-2 -left-2 z-10">
+            {isAuthenticated ? (
+              <button
+                onClick={handleLogout}
+                className="w-8 h-8 rounded-full bg-red-500 hover:bg-red-600 text-white flex items-center justify-center shadow-lg transition-colors cursor-pointer"
+                title="Logout"
+              >
+                <LogOut className="w-4 h-4" />
+              </button>
+            ) : (
+              <button
+                onClick={handleLogin}
+                disabled={isLoggingIn}
+                className="w-8 h-8 rounded-full bg-green-500 hover:bg-green-600 disabled:bg-gray-400 disabled:cursor-not-allowed text-white flex items-center justify-center shadow-lg transition-colors cursor-pointer"
+                title={isLoggingIn ? 'Logging in...' : 'Login'}
+              >
+                {isLoggingIn ? (
+                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                ) : (
+                  <LogIn className="w-4 h-4" />
+                )}
+              </button>
+            )}
+          </div>
+
+          {/* Message bubble */}
+          {currentMessage && <MessageBubble message={currentMessage} />}
 
           {/* Dog image */}
           <div className="relative">
             <img
               src={getDogImage()}
               alt="Companion Dog"
-              className="w-32 h-32 rounded-3xl shadow-2xl bg-white"
+              className="w-32 h-32 cursor-move"
               draggable={false}
             />
-            
-            {/* Message bubble */}
-            {currentMessage && <MessageBubble message={currentMessage} />}
           </div>
 
           {/* Interaction buttons */}
@@ -291,22 +315,36 @@ export default function DogOverlay() {
             onToggleNotes={handleToggleNotes}
             onToggleBreakSettings={handleToggleBreakSettings}
           />
-
-          {/* Notes panel */}
-          {showNotes && isAuthenticated && (
-            <div className="absolute top-0 left-36 w-80">
-              <NotesPanel onClose={() => setShowNotes(false)} />
-            </div>
-          )}
-
-          {/* Break settings panel */}
-          {showBreakSettings && isAuthenticated && (
-            <div className="absolute top-0 left-36 w-80">
-              <BreakReminderPanel onClose={() => setShowBreakSettings(false)} />
-            </div>
-          )}
         </div>
       </div>
+
+      {/* Notes panel */}
+      {showNotes && (
+        <div
+          style={{
+            position: 'fixed',
+            left: `${position.x + 150}px`,
+            top: `${position.y}px`,
+            zIndex: 999999,
+          }}
+        >
+          <NotesPanel onClose={() => setShowNotes(false)} />
+        </div>
+      )}
+
+      {/* Break reminder settings panel */}
+      {showBreakSettings && (
+        <div
+          style={{
+            position: 'fixed',
+            left: `${position.x + 150}px`,
+            top: `${position.y}px`,
+            zIndex: 999999,
+          }}
+        >
+          <BreakReminderPanel onClose={() => setShowBreakSettings(false)} />
+        </div>
+      )}
 
       {/* Break notification */}
       {showBreakNotification && (

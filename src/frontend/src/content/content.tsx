@@ -84,7 +84,7 @@ const queryClient = new QueryClient({
   },
 });
 
-console.log('Companion Dog Extension: Initializing...');
+console.log('[Content Script] Companion Dog Extension: Initializing...');
 
 const root = ReactDOM.createRoot(rootElement);
 root.render(
@@ -95,4 +95,4 @@ root.render(
   </QueryClientProvider>
 );
 
-console.log('Companion Dog Extension: Initialized successfully');
+console.log('[Content Script] Companion Dog Extension: Initialized successfully');
