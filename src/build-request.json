@@ -1,0 +1,83 @@
+{
+  "kind": "build_request",
+  "title": "Fix login functionality in end-to-end flow",
+  "priority": "high",
+  "requirements": [
+    {
+      "id": "REQ-10",
+      "text": "Debug and fix the Internet Identity login flow in the extension content script to ensure users can successfully authenticate when clicking the login button in the DogOverlay component",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-6"
+        ],
+        "quotes": [
+          "make sure it works end-to-end. the login step is not working."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Users can click the login button in the DogOverlay and successfully authenticate with Internet Identity",
+        "After successful login, the authenticated principal is available to the actor hooks",
+        "The InternetIdentityProvider context properly initializes in the shadow DOM content script environment",
+        "Login state persists across page reloads within the extension",
+        "Error handling displays clear feedback if login fails"
+      ]
+    },
+    {
+      "id": "REQ-11",
+      "text": "Verify that authenticated users can create, read, edit, and delete notes through the NotesPanel after login",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-6"
+        ],
+        "quotes": [
+          "make sure it works end-to-end"
+        ]
+      },
+      "acceptanceCriteria": [
+        "After login, users can create new notes that persist to the backend",
+        "Users can view their existing notes loaded from the backend",
+        "Users can edit existing notes and changes save successfully",
+        "Users can delete notes and the deletion reflects in the backend",
+        "All CRUD operations complete without errors and update the UI appropriately"
+      ]
+    },
+    {
+      "id": "REQ-12",
+      "text": "Verify that authenticated users can set break reminder intervals and receive notifications through the BreakReminderPanel after login",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-6"
+        ],
+        "quotes": [
+          "make sure it works end-to-end"
+        ]
+      },
+      "acceptanceCriteria": [
+        "After login, users can set break reminder intervals that save to the backend",
+        "Break notifications appear at the configured intervals",
+        "Users can snooze or dismiss notifications",
+        "Break reminder settings persist across sessions",
+        "The notification queue properly manages pending notifications"
+      ]
+    }
+  ],
+  "constraints": [
+    "Do not modify the Internet Identity hooks in frontend/src/hooks/useInternetIdentity.ts",
+    "Do not modify the actor hook in frontend/src/hooks/useActor.ts",
+    "Maintain the shadow DOM content script architecture in frontend/src/content/content.tsx",
+    "Keep all Motoko backend logic in the single main actor file backend/main.mo"
+  ],
+  "nonGoals": [
+    "Adding new authentication methods beyond Internet Identity",
+    "Changing the extension manifest structure",
+    "Modifying the visual design or UI components",
+    "Adding new features beyond fixing the existing login flow"
+  ],
+  "imageRequirements": {
+    "required": [],
+    "edits": []
+  }
+}

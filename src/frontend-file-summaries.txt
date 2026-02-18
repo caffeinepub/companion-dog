@@ -1,0 +1,16 @@
+{
+  "frontend/src/App.tsx": "Main landing page for downloading the Companion Dog browser extension with login functionality, feature descriptions, installation instructions, and a preview of the dog companion.",
+  "frontend/src/hooks/useQueries.ts": "React Query hooks for backend operations with detailed console logging for debugging, proper error handling, and user-friendly error messages.",
+  "frontend/src/content/messages.ts": "Collection of 20 encouraging messages and a utility function to randomly select messages for the dog companion to display.",
+  "frontend/src/content/DogOverlay.tsx": "Main overlay component with login/logout buttons, authentication state management, and conditional rendering of notes and break reminder panels based on authentication status.",
+  "frontend/src/content/MessageBubble.tsx": "Speech bubble component that displays encouraging messages above the dog with fade-in animations and proper positioning.",
+  "frontend/src/content/InteractionButtons.tsx": "Four circular action buttons (feed, pet, notes, break settings) with gradient backgrounds and hover effects positioned below the dog.",
+  "frontend/src/content/NotesPanel.tsx": "Notes panel with comprehensive error handling, loading states, and user feedback for all CRUD operations with proper authentication checks.",
+  "frontend/src/content/BreakReminderPanel.tsx": "Break reminder settings panel with error handling, success feedback, and loading states for saving break interval preferences.",
+  "frontend/src/content/BreakNotification.tsx": "Full-screen modal notification that appears when it's time for a break, with snooze and dismiss options.",
+  "frontend/src/content/content.tsx": "Content script entry point with enhanced QueryClient configuration, spin animation keyframes, and initialization logging for debugging.",
+  "frontend/public/manifest.json": "Chrome extension manifest v3 configuration with permissions, content scripts, and web-accessible resources.",
+  "frontend/src/index.css": "Global styles with warm OKLCH color palette (amber/orange theme), custom fonts (Nunito/Quicksand), and animation keyframes for the companion theme.",
+  "frontend/tailwind.config.js": "Tailwind configuration extended with custom fonts, warm color tokens, increased border radius values, and soft shadow utilities.",
+  "frontend/scripts/build-extension.js": "Node.js build script that packages the extension into a downloadable zip file with manifest, assets, and bundled scripts."
+}

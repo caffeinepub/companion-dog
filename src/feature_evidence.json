@@ -1,0 +1,63 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-debug-and-fix-the-internet-identity-login-flow-in-the-extension-content-script-to-ensure-users-can-successfully-authenticate-when-clicking-the-login-button-in-the-dogoverlay-component",
+      "featureTitle": "Debug and fix the Internet Identity login flow in the extension content script to ensure users can successfully authenticate when clicking the login button in the DogOverlay component",
+      "files": [
+        "frontend/src/content/DogOverlay.tsx",
+        "frontend/src/content/content.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-10"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-verify-that-authenticated-users-can-create-read-edit-and-delete-notes-through-the-notespanel-after-login",
+      "featureTitle": "Verify that authenticated users can create, read, edit, and delete notes through the NotesPanel after login",
+      "files": [
+        "frontend/src/content/NotesPanel.tsx",
+        "frontend/src/hooks/useQueries.ts"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-11"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-verify-that-authenticated-users-can-set-break-reminder-intervals-and-receive-notifications-through-the-breakreminderpanel-after-login",
+      "featureTitle": "Verify that authenticated users can set break reminder intervals and receive notifications through the BreakReminderPanel after login",
+      "files": [
+        "frontend/src/content/BreakReminderPanel.tsx",
+        "frontend/src/content/DogOverlay.tsx",
+        "frontend/src/hooks/useQueries.ts"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-12"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

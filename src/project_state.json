@@ -1,0 +1,162 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 5,
+  "summary": "Browser extension with an overlay pop-up dog companion that provides encouragement, allows feeding/petting interactions, note-taking functionality, and break reminders at set intervals",
+  "architectural_notes": [
+    "Browser extension using Manifest V3",
+    "Content script for overlay injection",
+    "Popup UI for dog companion interface",
+    "Local storage for user preferences and break timer settings",
+    "Chrome extension format (can be loaded unpacked from zip)"
+  ],
+  "known_issues": [
+    "Login step not working in end-to-end flow"
+  ],
+  "isFixRequest": true,
+  "existing_features": [
+    {
+      "id": "feature-create-a-browser-extension-manifest-manifest-json-that-enables-the-extension-to-inject-content-scripts-into-web-pages-and-display-an-overlay",
+      "title": "Create a browser extension manifest (manifest.json) that enables the extension to inject content scripts into web pages and display an overlay",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-an-overlay-component-that-displays-a-dog-character-on-any-webpage-the-user-visits",
+      "title": "Implement an overlay component that displays a dog character on any webpage the user visits",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-system-where-the-dog-displays-random-encouraging-messages-to-the-user-at-regular-intervals",
+      "title": "Create a system where the dog displays random encouraging messages to the user at regular intervals",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-a-feeding-interaction-where-users-can-click-to-feed-the-dog-triggering-visual-feedback-and-animations",
+      "title": "Implement a feeding interaction where users can click to feed the dog, triggering visual feedback and animations",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-a-petting-interaction-where-users-can-click-to-pet-the-dog-triggering-happy-animations-and-responses",
+      "title": "Implement a petting interaction where users can click to pet the dog, triggering happy animations and responses",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-note-taking-interface-accessible-through-the-dog-overlay-where-users-can-create-view-edit-and-delete-notes",
+      "title": "Add a note-taking interface accessible through the dog overlay where users can create, view, edit, and delete notes",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-a-break-reminder-system-where-users-can-set-custom-time-intervals-and-receive-notifications-from-the-dog-to-take-breaks",
+      "title": "Implement a break reminder system where users can set custom time intervals and receive notifications from the dog to take breaks",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-build-system-that-packages-the-extension-as-a-downloadable-zip-file-containing-all-necessary-files-manifest-scripts-assets",
+      "title": "Create a build system that packages the extension as a downloadable zip file containing all necessary files (manifest, scripts, assets)",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-design-a-visually-appealing-and-cohesive-interface-with-warm-friendly-colors-and-playful-typography-that-reinforces-the-encouraging-companion-theme-throughout-all-dog-interactions-using-soft-gradients-and-rounded-corners",
+      "title": "Design a visually appealing and cohesive interface with warm, friendly colors and playful typography that reinforces the encouraging companion theme throughout all dog interactions, using soft gradients and rounded corners",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-debug-and-fix-the-internet-identity-login-flow-in-the-extension-content-script-to-ensure-users-can-successfully-authenticate-when-clicking-the-login-button-in-the-dogoverlay-component",
+      "title": "Debug and fix the Internet Identity login flow in the extension content script to ensure users can successfully authenticate when clicking the login button in the DogOverlay component",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-verify-that-authenticated-users-can-create-read-edit-and-delete-notes-through-the-notespanel-after-login",
+      "title": "Verify that authenticated users can create, read, edit, and delete notes through the NotesPanel after login",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-verify-that-authenticated-users-can-set-break-reminder-intervals-and-receive-notifications-through-the-breakreminderpanel-after-login",
+      "title": "Verify that authenticated users can set break reminder intervals and receive notifications through the BreakReminderPanel after login",
+      "reqIds": [
+        "REQ-12"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Overlay pop-up dog that displays on browser pages",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Dog says encouraging things to the user",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "User can feed the dog",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "User can pet the dog",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Note-taking functionality through the dog interface",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Dog reminds user to take breaks after set times",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-7",
+      "summary": "Extension can be downloaded as a zip file",
+      "reqIds": [],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "Companion Dog",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}
